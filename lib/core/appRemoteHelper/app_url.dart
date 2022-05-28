@@ -5,8 +5,7 @@ class AppUrls {
   String imageBaseUrl = "http://crmapi.educationat.org.goldeninfotech.com.bd/";
 
   static const String dummyImageUrl =
-      'https://i.picsum.photos/id/1084/536/354.jpg'
-      '?grayscale&hmac=Ux7nzg19e1q35mlUVZjhCLxqkR30cC-CarVg-nlIf60';
+      'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg';
 
   static const String placeHolderBlurHash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 

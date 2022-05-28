@@ -18,9 +18,9 @@ class CustomTextFieldWidget extends StatelessWidget {
   final AutovalidateMode autovalidateMode;
   final BoxConstraints? suffixIconConstraints;
   final EdgeInsets? prefixIconPadding;
-  final Color? fillColor;
+  Color? fillColor;
 
-  const CustomTextFieldWidget({
+  CustomTextFieldWidget({
     Key? key,
     this.labelText,
     this.hintText,
@@ -55,6 +55,8 @@ class CustomTextFieldWidget extends StatelessWidget {
       fontSize: FontSize.s14,
     );
 
+    fillColor ??= ColorManager.white;
+
     return TextFormField(
       onTap: onTap,
       readOnly: readOnly,
@@ -81,7 +83,6 @@ class CustomTextFieldWidget extends StatelessWidget {
         border: border,
         enabledBorder: border,
         focusedBorder: border,
-        // alignLabelWithHint: maxLines == null,
         labelText: addHint
             ? null
             : ((controller?.text != null || !readOnly) ? labelText : null),
@@ -93,8 +94,7 @@ class CustomTextFieldWidget extends StatelessWidget {
         prefixIcon: prefixIcon == null
             ? null
             : Padding(
-                padding:
-                    prefixIconPadding ?? const EdgeInsets.symmetric(horizontal: 10),
+                padding: prefixIconPadding ?? const EdgeInsets.only(left: 10),
                 child: prefixIcon,
               ),
         prefixText: prefixText,
@@ -104,7 +104,7 @@ class CustomTextFieldWidget extends StatelessWidget {
         suffixIcon: suffixIcon == null
             ? null
             : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.only(right: 10),
                 child: suffixIcon,
               ),
         suffixIconConstraints: suffixIconConstraints ??

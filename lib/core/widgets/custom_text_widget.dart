@@ -3,22 +3,18 @@ import 'package:flutter/material.dart';
 
 class CustomTextWidget extends StatelessWidget {
   final String text;
-  final FontWeight? fontWeight;
-  final Color? color;
-  final double? fontSize;
   final TextAlign? align;
   final int? maxLine;
   final bool? isFullWidth;
+  final TextStyle? style;
 
   const CustomTextWidget({
     Key? key,
     required this.text,
-    this.fontWeight,
-    this.color,
-    this.fontSize,
     this.align,
     this.maxLine,
     this.isFullWidth,
+    this.style,
   }) : super(key: key);
 
   @override
@@ -29,17 +25,17 @@ class CustomTextWidget extends StatelessWidget {
         minWidth: isFullWidth == null
             ? 0
             : isFullWidth!
-                ? MediaQuery.of(context).size.width
+                ? double.infinity
                 : 10,
       ),
       child: Text(
         text,
         maxLines: maxLine ?? 1,
-        style: TextStyle(
-          fontWeight: fontWeight ?? FontWeight.normal,
-          color: color ?? ColorManager.lightGrey,
-          fontSize: fontSize ?? FontSize.s16,
-        ),
+        style: style ??
+            getRegularStyle(
+              color: ColorManager.lightGrey,
+              fontSize: FontSize.s14,
+            ),
         textAlign: align ?? TextAlign.justify,
       ),
     );

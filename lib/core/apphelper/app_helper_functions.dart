@@ -45,3 +45,9 @@ class AppHelperFunctions {
     }
   }
 }
+
+extension AmountGenerator on String {
+  static String doubleToAmount(double value) {
+    return "\u09F3 ${value.toStringAsFixed(2)}";
+  }
+}

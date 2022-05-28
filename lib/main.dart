@@ -15,7 +15,7 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      statusBarColor: ColorManager.primaryColor.withOpacity(0.6),
+      statusBarColor: ColorManager.backgroundColor,
     ),
   );
   runApp(

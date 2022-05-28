@@ -27,6 +27,7 @@ ThemeData getApplicationTheme() {
         color: ColorManager.white,
         fontSize: FontSize.s16,
       ),
+      brightness: Brightness.dark,
     ),
     // Button theme
     buttonTheme: ButtonThemeData(
@@ -86,34 +87,41 @@ ThemeData getApplicationTheme() {
 
     // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.all(AppPadding.p8),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: AppPadding.p24,
+        vertical: AppPadding.p12,
+      ),
       // hint style
       hintStyle: getRegularStyle(color: ColorManager.lightGrey),
 
       // label style
       labelStyle: getMediumStyle(color: ColorManager.darkGrey),
+
       // error style
       errorStyle: getRegularStyle(color: ColorManager.error),
+
+      // suffix icon color
+      suffixIconColor: ColorManager.lightGrey,
 
       // enabled border
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: ColorManager.grey,
+          color: ColorManager.backgroundColor,
           width: AppSize.s1_5,
         ),
         borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s8),
+          Radius.circular(AppSize.s16),
         ),
       ),
 
       // focused border
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: ColorManager.primaryColor,
+          color: ColorManager.backgroundColor,
           width: AppSize.s1_5,
         ),
         borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s8),
+          Radius.circular(AppSize.s16),
         ),
       ),
 
@@ -121,7 +129,7 @@ ThemeData getApplicationTheme() {
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: ColorManager.error,
-          width: AppSize.s1_5,
+          width: AppSize.s1,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(AppSize.s8),
@@ -131,7 +139,7 @@ ThemeData getApplicationTheme() {
       // focused error border
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: ColorManager.primaryColor,
+          color: ColorManager.error,
           width: AppSize.s1_5,
         ),
         borderRadius: const BorderRadius.all(

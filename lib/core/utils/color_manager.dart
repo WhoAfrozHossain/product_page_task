@@ -15,7 +15,15 @@ class ColorManager {
   // Extra Color
   static Color secondaryColor = HexColor.fromHex("#DA2079");
   static Color secondaryLightColor = HexColor.fromHex("#FFCCE4");
-  static Color grey2 = HexColor.fromHex("#797979");
+
+  LinearGradient gradientButtonColor() {
+    return LinearGradient(
+        colors: [primaryColor, primaryColorDark],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: [0.0, 1.0],
+        tileMode: TileMode.clamp);
+  }
 }
 
 extension HexColor on Color {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:product_page_task/core/utils/utils_export.dart';
 
 import 'font_manager.dart';
 
@@ -13,49 +14,33 @@ TextStyle _getTextStyle(
 
 // regular style
 
-TextStyle getRegularStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.regular, color);
+TextStyle getRegularStyle({double? fontSize, Color? color}) {
+  return _getTextStyle(fontSize ?? FontSize.s12, FontConstants.fontFamily,
+      FontWeightManager.regular, color ?? ColorManager.lightGrey);
 }
 // light text style
 
-TextStyle getLightStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.light, color);
+TextStyle getLightStyle({double? fontSize, Color? color}) {
+  return _getTextStyle(fontSize ?? FontSize.s12, FontConstants.fontFamily,
+      FontWeightManager.light, color ?? ColorManager.lightGrey);
 }
 // bold text style
 
-TextStyle getBoldStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.bold, color);
+TextStyle getBoldStyle({double? fontSize, Color? color}) {
+  return _getTextStyle(fontSize ?? FontSize.s12, FontConstants.fontFamily,
+      FontWeightManager.bold, color ?? ColorManager.lightGrey);
 }
 
 // semi bold text style
 
-TextStyle getSemiBoldStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.semiBold, color);
+TextStyle getSemiBoldStyle({double? fontSize, Color? color}) {
+  return _getTextStyle(fontSize ?? FontSize.s12, FontConstants.fontFamily,
+      FontWeightManager.semiBold, color ?? ColorManager.lightGrey);
 }
-
 
 // medium text style
 
-TextStyle getMediumStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.medium, color);
+TextStyle getMediumStyle({double? fontSize, Color? color}) {
+  return _getTextStyle(fontSize ?? FontSize.s12, FontConstants.fontFamily,
+      FontWeightManager.medium, color ?? ColorManager.lightGrey);
 }
-
-
-
-
-
-
-
-
-
-
