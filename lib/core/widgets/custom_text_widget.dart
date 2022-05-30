@@ -30,7 +30,7 @@ class CustomTextWidget extends StatelessWidget {
       ),
       child: Text(
         text,
-        maxLines: maxLine ?? 1,
+        maxLines: maxLine,
         style: style ??
             getRegularStyle(
               color: ColorManager.lightGrey,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
-import 'package:product_page_task/core/widgets/custom_space_widget.dart';
-import 'package:product_page_task/features/product/widgets/product_grid_list_widget.dart';
-import 'package:product_page_task/features/product/widgets/product_search_widget.dart';
+import 'package:product_page_task/features/product/screens/widgets/product_grid_list_widget.dart';
+import 'package:product_page_task/features/product/screens/widgets/product_search_widget.dart';
 
 class ProductListPage extends StatelessWidget {
   const ProductListPage({Key? key}) : super(key: key);

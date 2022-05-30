@@ -2,6 +2,7 @@ import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class CustomTextFieldWidget extends StatelessWidget {
   final String? labelText, hintText;
   final String? initialValue, prefixText, suffixText;

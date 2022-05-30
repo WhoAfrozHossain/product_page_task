@@ -4,7 +4,8 @@ import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/core/widgets/custom_image_widget.dart';
 import 'package:product_page_task/core/widgets/custom_space_widget.dart';
 import 'package:product_page_task/core/widgets/custom_text_widget.dart';
-import 'package:product_page_task/features/product/widgets/cart_counter_widget.dart';
+
+import 'cart_counter_widget.dart';
 
 class ProductGridItemWidget extends StatelessWidget {
   const ProductGridItemWidget({
@@ -37,74 +38,79 @@ class ProductGridItemWidget extends StatelessWidget {
           left: 0,
           right: 0,
           bottom: AppSize.s15,
-          child: Container(
-            decoration: BoxDecoration(
-              color: ColorManager.white,
-              borderRadius: BorderRadius.circular(AppSize.s16),
-            ),
-            padding: EdgeInsets.fromLTRB(
-              AppSize.s8,
-              AppSize.s8,
-              AppSize.s8,
-              AppSize.s15,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppPadding.p16),
-                    child: CustomImageWidget(
-                      context: context,
-                      imageUrl:
-                          "https://www.ubuy.com.bd/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFuTTNHSnBqN0wuX1NMMTUwMF8uanBn.jpg",
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.productDetails);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppSize.s16),
+              ),
+              padding: EdgeInsets.fromLTRB(
+                AppSize.s8,
+                AppSize.s8,
+                AppSize.s8,
+                AppSize.s15,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppPadding.p16),
+                      child: CustomImageWidget(
+                        context: context,
+                        imageUrl:
+                            "https://www.ubuy.com.bd/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFuTTNHSnBqN0wuX1NMMTUwMF8uanBn.jpg",
+                      ),
                     ),
                   ),
-                ),
-                CustomTextWidget(
-                  text: "Lays Classic Family Chips",
-                  maxLine: 2,
-                  isFullWidth: true,
-                  style: getRegularStyle(
-                    color: ColorManager.black,
-                    fontSize: FontSize.s16,
+                  CustomTextWidget(
+                    text: "Lays Classic Family Chips",
+                    maxLine: 2,
+                    isFullWidth: true,
+                    style: getRegularStyle(
+                      color: ColorManager.black,
+                      fontSize: FontSize.s16,
+                    ),
                   ),
-                ),
-                CustomSpaceWidget.fromHeight(5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TitleWithValueRow(
-                      title: AppStrings.buy,
-                      value: 20,
-                      valueColor: ColorManager.secondaryColor,
-                      valueSize: FontSize.s18,
-                    ),
-                    TitleWithValueRow(
-                      value: 22,
-                      isRemove: true,
-                      valueColor: ColorManager.secondaryColor,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TitleWithValueRow(
-                      title: AppStrings.sell,
-                      value: 25,
-                      valueColor: ColorManager.darkGrey,
-                      valueSize: FontSize.s14,
-                    ),
-                    TitleWithValueRow(
-                      title: AppStrings.profit,
-                      value: 5,
-                      isRemove: true,
-                      valueColor: ColorManager.darkGrey,
-                      valueSize: FontSize.s14,
-                    ),
-                  ],
-                )
-              ],
+                  CustomSpaceWidget.fromHeight(5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TitleWithValueRow(
+                        title: AppStrings.buy,
+                        value: 20,
+                        valueColor: ColorManager.secondaryColor,
+                        valueSize: FontSize.s18,
+                      ),
+                      TitleWithValueRow(
+                        value: 22,
+                        isRemove: true,
+                        valueColor: ColorManager.secondaryColor,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TitleWithValueRow(
+                        title: AppStrings.sell,
+                        value: 25,
+                        valueColor: ColorManager.darkGrey,
+                        valueSize: FontSize.s14,
+                      ),
+                      TitleWithValueRow(
+                        title: AppStrings.profit,
+                        value: 5,
+                        isRemove: true,
+                        valueColor: ColorManager.darkGrey,
+                        valueSize: FontSize.s14,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

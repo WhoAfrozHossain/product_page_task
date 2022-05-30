@@ -13,7 +13,7 @@ class CustomAppbarWidget extends PreferredSize {
   final double? actionButtonWidth;
   final Widget? titleWidget, leading, bottom;
   final bool addBackButton;
-  final bool? centerTitle;
+  final bool centerTitle;
 
   CustomAppbarWidget({
     Key? key,
@@ -30,7 +30,7 @@ class CustomAppbarWidget extends PreferredSize {
     this.onActionButtonTap,
     this.actionButtonWidth = 100,
     this.bottom,
-    this.centerTitle,
+    this.centerTitle = false,
   })  : assert(
           textColor == null || textStyle == null,
           'Cannot provide both a textColor and a textStyle\n'
@@ -45,7 +45,7 @@ class CustomAppbarWidget extends PreferredSize {
 
   @override
   Widget build(BuildContext context) {
-    backgroundColor ??= ColorManager.primaryColor;
+    backgroundColor ??= ColorManager.backgroundColor;
     backButtonColor ??= ColorManager.black;
 
     return AppBar(
@@ -75,11 +75,12 @@ class CustomAppbarWidget extends PreferredSize {
           : Text(
               title ?? "",
               style: textStyle ??
-                  getBoldStyle(
+                  getRegularStyle(
                     color: textColor ??
                         (backgroundColor == ColorManager.white
                             ? ColorManager.lightGrey
-                            : Colors.white),
+                            : Colors.black),
+                    fontSize: FontSize.s16,
                   ),
             ),
     );

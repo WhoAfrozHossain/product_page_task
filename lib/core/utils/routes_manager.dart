@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:product_page_task/features/product/screens/product_list.dart';
+import 'package:product_page_task/features/_exports/screens_export.dart';
 
 class Routes {
-  static const String home = "/home";
+  static const String productList = "/productList";
+  static const String productDetails = "/productDetails";
 }
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case Routes.home:
+      case Routes.productList:
         return MaterialPageRoute(builder: (_) => ProductListPage());
+      case Routes.productDetails:
+        return MaterialPageRoute(builder: (_) => ProductDetailsPage());
 
       default:
         return unDefinedRoute();

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: AppHelper.snackBarKey,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: Routes.home,
+      initialRoute: Routes.productList,
       theme: getApplicationTheme(),
     );
   }

@@ -35,7 +35,7 @@ class CartCounterWidget extends StatelessWidget {
                     color: ColorManager.white,
                   ),
                   onTap: () {},
-                  buttonColor: ColorManager.secondaryColor.withOpacity(.7),
+                  buttonColor: ColorManager.secondaryColor.withOpacity(.5),
                   borderRadius: AppSize.s36,
                   height: 25,
                   width: 25,
@@ -43,7 +43,7 @@ class CartCounterWidget extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: Container(
-                      padding: EdgeInsets.all(AppSize.s5),
+                      // padding: EdgeInsets.all(AppSize.s5),
                       child: CustomTextWidget(
                         text: "$count ${AppStrings.pis}",
                         style: getBoldStyle(
