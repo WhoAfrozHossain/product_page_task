@@ -1,4 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
+import 'package:product_page_task/features/product/data/repositories/products_repository_impl.dart';
+import 'package:product_page_task/features/product/domain/usecase/products_use_case.dart';
+import 'package:product_page_task/features/product/screens/bloc/product_bloc.dart';
 import 'package:product_page_task/inject_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +23,21 @@ void main() async {
     ),
   );
   runApp(
-    MyApp(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ProductBloc(
+            productsUseCase: ProductsUseCase(
+              productsRepository: ProductsRepositoryImpl(
+                appNetworkInfo: sl(),
+                productsRemoteDataSource: sl(),
+              ),
+            ),
+          ),
+        ),
+      ],
+      child: MyApp(),
+    ),
   );
 }
 

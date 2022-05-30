@@ -101,7 +101,7 @@ String? _handleMessage(int statusCode, String body) {
       break;
   }
 
-  return message!;
+  return message ?? "";
 }
 
 bool _isSuccess(int statusCode) {
