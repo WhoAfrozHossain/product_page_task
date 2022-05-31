@@ -28,4 +28,14 @@ class ProductsRepositoryImpl extends ProductsRepository {
       return Left(NoInternetConnection());
     }
   }
+
+  @override
+  Future<Either<Failure, AppApiResponse<Model>>> getProductItem(
+      {String? slug}) async {
+    if (await appNetworkInfo.isConnected) {
+      return productsRemoteDataSource.getProductItem(slug: slug);
+    } else {
+      return Left(NoInternetConnection());
+    }
+  }
 }

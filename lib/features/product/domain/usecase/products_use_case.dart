@@ -20,6 +20,8 @@ class ProductsUseCase extends UseCase<AppApiResponse, Prams> {
         offset: params.offset,
         search: params.search,
       );
+    } else if (params is ProductItemPrams) {
+      return productsRepository.getProductItem(slug: params.slug);
     } else {
       return productsRepository.getProducts();
     }
@@ -40,6 +42,15 @@ class ProductListPrams extends Prams {
   final String? search;
 
   ProductListPrams({this.nextUrl, this.limit, this.offset, this.search});
+
+  @override
+  List<Object?> get props => [];
+}
+
+class ProductItemPrams extends Prams {
+  final String? slug;
+
+  ProductItemPrams({this.slug});
 
   @override
   List<Object?> get props => [];

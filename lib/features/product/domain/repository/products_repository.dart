@@ -6,4 +6,6 @@ import '../../../../core/error/failures.dart';
 abstract class ProductsRepository {
   Future<Either<Failure, AppApiResponse>> getProducts(
       {String? nextUrl, String? limit, String? offset, String? search});
+
+  Future<Either<Failure, AppApiResponse>> getProductItem({String? slug});
 }

@@ -2,11 +2,11 @@
 
 import 'dart:io';
 
-import 'package:product_page_task/core/appRemoteHelper/app_url.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
+import 'package:product_page_task/core/appRemoteHelper/app_url.dart';
 
 class CustomImageWidget extends StatelessWidget {
   final BuildContext context;

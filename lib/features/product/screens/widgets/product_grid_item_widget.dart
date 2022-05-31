@@ -4,30 +4,17 @@ import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/core/widgets/custom_image_widget.dart';
 import 'package:product_page_task/core/widgets/custom_space_widget.dart';
 import 'package:product_page_task/core/widgets/custom_text_widget.dart';
+import 'package:product_page_task/features/product/data/model/product_model.dart';
 
 import 'cart_counter_widget.dart';
 
 class ProductGridItemWidget extends StatelessWidget {
   const ProductGridItemWidget({
     Key? key,
-    this.productImage,
-    this.productName,
-    this.productCurrentBuyRate,
-    this.productOldBuyRate,
-    this.productCurrentSellRate,
-    this.productSellBenefitPrice,
-    this.stockCount,
-    this.selectCount,
+    required this.item,
   }) : super(key: key);
 
-  final String? productImage;
-  final String? productName;
-  final double? productCurrentBuyRate;
-  final double? productOldBuyRate;
-  final double? productCurrentSellRate;
-  final double? productSellBenefitPrice;
-  final int? stockCount;
-  final int? selectCount;
+  final ProductModel item;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +27,13 @@ class ProductGridItemWidget extends StatelessWidget {
           bottom: AppSize.s15,
           child: InkWell(
             onTap: () {
-              Navigator.pushNamed(context, Routes.productDetails);
+              Navigator.pushNamed(
+                context,
+                Routes.productDetails,
+                arguments: {
+                  "product_slug": item.slug ?? "",
+                },
+              );
             },
             child: Container(
               decoration: BoxDecoration(
@@ -60,14 +53,14 @@ class ProductGridItemWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(AppPadding.p16),
                       child: CustomImageWidget(
                         context: context,
-                        imageUrl:
-                            "https://www.ubuy.com.bd/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFuTTNHSnBqN0wuX1NMMTUwMF8uanBn.jpg",
+                        imageUrl: item.image,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   CustomTextWidget(
-                    text: "Lays Classic Family Chips",
-                    maxLine: 2,
+                    text: item.productName ?? "",
+                    maxLine: 1,
                     isFullWidth: true,
                     style: getRegularStyle(
                       color: ColorManager.black,
@@ -80,14 +73,15 @@ class ProductGridItemWidget extends StatelessWidget {
                     children: [
                       TitleWithValueRow(
                         title: AppStrings.buy,
-                        value: 20,
+                        value: item.charge?.currentCharge,
                         valueColor: ColorManager.secondaryColor,
-                        valueSize: FontSize.s18,
+                        valueSize: FontSize.s15,
                       ),
                       TitleWithValueRow(
-                        value: 22,
+                        value: item.charge?.discountCharge,
                         isRemove: true,
                         valueColor: ColorManager.secondaryColor,
+                        valueSize: FontSize.s12,
                       ),
                     ],
                   ),
@@ -96,16 +90,15 @@ class ProductGridItemWidget extends StatelessWidget {
                     children: [
                       TitleWithValueRow(
                         title: AppStrings.sell,
-                        value: 25,
+                        value: item.charge?.sellingPrice,
                         valueColor: ColorManager.darkGrey,
-                        valueSize: FontSize.s14,
+                        valueSize: FontSize.s12,
                       ),
                       TitleWithValueRow(
                         title: AppStrings.profit,
-                        value: 5,
-                        isRemove: true,
+                        value: item.charge?.profit,
                         valueColor: ColorManager.darkGrey,
-                        valueSize: FontSize.s14,
+                        valueSize: FontSize.s12,
                       ),
                     ],
                   )
@@ -114,7 +107,7 @@ class ProductGridItemWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (stockCount == null || stockCount! < 1)
+        if (item.stock == null || item.stock! < 1)
           Positioned(
             top: 8,
             right: 8,
@@ -133,16 +126,18 @@ class ProductGridItemWidget extends StatelessWidget {
               ),
             ),
           ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: CartCounterWidget(
-              count: 5,
+        if (item.stock != null && item.stock! > 0)
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: CartCounterWidget(
+                slug: item.slug ?? "",
+                stock: item.stock ?? 0,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
@@ -171,15 +166,17 @@ class TitleWithValueRow extends StatelessWidget {
         if (title != null)
           CustomTextWidget(
             text: title ?? "",
-            style: getRegularStyle(fontSize: FontSize.s8),
+            style: getRegularStyle(fontSize: FontSize.s10),
           ),
         if (title != null) CustomSpaceWidget.fromWidth(5),
-        CustomTextWidget(
-          text: AmountGenerator.doubleToAmount(value ?? 0),
-          style: getBoldStyle(color: valueColor, fontSize: valueSize).copyWith(
-            decoration: isRemove ? TextDecoration.lineThrough : null,
+        if (value != null)
+          CustomTextWidget(
+            text: AmountGenerator.doubleToAmount(value ?? 0),
+            style:
+                getBoldStyle(color: valueColor, fontSize: valueSize).copyWith(
+              decoration: isRemove ? TextDecoration.lineThrough : null,
+            ),
           ),
-        ),
       ],
     );
   }

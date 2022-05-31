@@ -4,6 +4,7 @@ class CustomIconButton extends StatelessWidget {
   final Widget? icon;
   final Function()? onTap;
   final Color? buttonColor;
+  final Color? backgroundColor;
   final LinearGradient? gradientColor;
   final double borderRadius;
   final double height;
@@ -14,6 +15,7 @@ class CustomIconButton extends StatelessWidget {
     this.icon,
     this.onTap,
     this.buttonColor,
+    this.backgroundColor,
     this.gradientColor,
     this.borderRadius = 0,
     this.height = 40,
@@ -27,7 +29,7 @@ class CustomIconButton extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
-        // color: buttonColor,
+        color: backgroundColor,
         gradient: gradientColor,
       ),
       child: IconButton(
@@ -39,7 +41,11 @@ class CustomIconButton extends StatelessWidget {
             currentFocus.focusedChild?.unfocus();
           }
 
-          onTap ?? () => Navigator.pop(context);
+          if (onTap == null) {
+            Navigator.pop(context);
+          } else {
+            onTap!();
+          }
         },
         icon: icon ??
             Icon(

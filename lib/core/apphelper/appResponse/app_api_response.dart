@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:product_page_task/core/widgets/app_snack_bar.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:product_page_task/core/widgets/app_snack_bar.dart';
+
 import 'model/model.dart';
 
 part 'app_http_code.dart';
@@ -30,7 +32,7 @@ class AppApiResponse<T extends Model> {
       data: model,
       success: _isSuccess(response.statusCode),
       message: _handleMessage(response.statusCode, response.body),
-      body: response.body,
+      body: utf8.decode(response.bodyBytes),
     );
   }
 }

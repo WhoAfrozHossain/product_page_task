@@ -19,12 +19,21 @@ class ProductLoadingState extends ProductState {
 }
 
 class ProductsListSuccessState extends ProductState {
-  final List<ProductModel>? productsList;
+  final List<ProductModel> productsList;
 
-  ProductsListSuccessState({this.productsList});
+  ProductsListSuccessState({required this.productsList});
 
   @override
   List<Object?> get props => [productsList];
+}
+
+class ProductItemSuccessState extends ProductState {
+  final ProductModel? item;
+
+  ProductItemSuccessState({required this.item});
+
+  @override
+  List<Object?> get props => [item];
 }
 
 class ProductsListErrorState extends ProductState {
@@ -39,4 +48,14 @@ class ProductsListErrorState extends ProductState {
 class ProductsListLastIndexState extends ProductState {
   @override
   List<Object?> get props => throw UnimplementedError();
+}
+
+class ProductCartCountState extends ProductState {
+  final int? count;
+  final String? slug;
+
+  ProductCartCountState({required this.count, required this.slug});
+
+  @override
+  List<Object?> get props => [count];
 }

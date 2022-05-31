@@ -1,24 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/core/widgets/custom_icon_button.dart';
 import 'package:product_page_task/core/widgets/custom_text_widget.dart';
+import 'package:product_page_task/features/product/screens/function/product_functions.dart';
+
+import '../../../../main.dart';
+import '../bloc/product_bloc.dart';
 
 class CartCounterWidget extends StatelessWidget {
-  const CartCounterWidget({Key? key, this.count}) : super(key: key);
+  CartCounterWidget({Key? key, required this.slug, required this.stock})
+      : super(key: key);
 
-  final int? count;
+  final String slug;
+  final int stock;
+
+  int? countCart;
 
   @override
   Widget build(BuildContext context) {
-    return count == null || count! < 1
+    sl<ProductFunctions>()
+        .getProductCart(slug)
+        .then((value) => countCart = value);
+
+    return BlocListener<ProductBloc, ProductState>(
+      listener: (context, state) {},
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (_, state) {
+          if (state is ProductCartCountState) {
+            if (state.slug == slug) {
+              countCart = state.count;
+            }
+            return _view(context, countCart);
+          } else {
+            return _view(context, countCart);
+          }
+        },
+      ),
+    );
+  }
+
+  _view(BuildContext context, int? count) {
+    print("$slug :: $count");
+
+    return count == null || count < 1
         ? CustomIconButton(
             icon: Icon(
               Icons.add_rounded,
               color: ColorManager.white,
             ),
-            onTap: () {},
+            onTap: () {
+              sl<ProductFunctions>().addProductCart(context, slug, stock);
+            },
             gradientColor: ColorManager().gradientButtonColor(),
             borderRadius: AppSize.s36,
+            height: 30,
+            width: 30,
           )
         : Container(
             decoration: BoxDecoration(
@@ -34,8 +71,10 @@ class CartCounterWidget extends StatelessWidget {
                     Icons.remove_rounded,
                     color: ColorManager.white,
                   ),
-                  onTap: () {},
-                  buttonColor: ColorManager.secondaryColor.withOpacity(.5),
+                  onTap: () {
+                    sl<ProductFunctions>().removeProductCart(context, slug);
+                  },
+                  backgroundColor: ColorManager.secondaryColor.withOpacity(.2),
                   borderRadius: AppSize.s36,
                   height: 25,
                   width: 25,
@@ -59,7 +98,9 @@ class CartCounterWidget extends StatelessWidget {
                     Icons.add_rounded,
                     color: ColorManager.white,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    sl<ProductFunctions>().addProductCart(context, slug, stock);
+                  },
                   gradientColor: ColorManager().gradientButtonColor(),
                   borderRadius: AppSize.s36,
                   height: 25,

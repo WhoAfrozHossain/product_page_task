@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/features/product/data/repositories/products_repository_impl.dart';
 import 'package:product_page_task/features/product/domain/usecase/products_use_case.dart';
 import 'package:product_page_task/features/product/screens/bloc/product_bloc.dart';
 import 'package:product_page_task/inject_container.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
+
 import 'core/apphelper/app_helper.dart';
 
 GetIt sl = GetIt.instance;
@@ -33,7 +34,7 @@ void main() async {
                 productsRemoteDataSource: sl(),
               ),
             ),
-          ),
+          )..add(GetProductListEvent()),
         ),
       ],
       child: MyApp(),

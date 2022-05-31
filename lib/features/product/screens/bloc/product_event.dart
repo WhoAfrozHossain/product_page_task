@@ -21,3 +21,21 @@ class GetProductListEvent extends ProductEvent {
   @override
   List<Object?> get props => [nextUrl, limit, offset, search, isPagination];
 }
+
+class GetProductItemEvent extends ProductEvent {
+  final String slug;
+
+  GetProductItemEvent({required this.slug});
+
+  @override
+  List<Object?> get props => [slug];
+}
+
+class GetProductCartCountEvent extends ProductEvent {
+  final String slug;
+
+  GetProductCartCountEvent({required this.slug});
+
+  @override
+  List<Object?> get props => [slug];
+}

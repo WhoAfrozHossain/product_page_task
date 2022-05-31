@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:product_page_task/features/product/screens/function/product_functions.dart';
 
+import '../../../../main.dart';
 import 'product_grid_item_widget.dart';
 
 class ProductGridListWidget extends StatelessWidget {
@@ -15,10 +17,11 @@ class ProductGridListWidget extends StatelessWidget {
         crossAxisCount: 2,
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
-        childAspectRatio: .55,
+        childAspectRatio: .6,
       ),
-      itemBuilder: (_, index) => ProductGridItemWidget(),
-      itemCount: 12,
+      itemBuilder: (_, index) => ProductGridItemWidget(
+          item: sl<ProductFunctions>().productList[index]),
+      itemCount: sl<ProductFunctions>().productList.length,
     );
   }
 }

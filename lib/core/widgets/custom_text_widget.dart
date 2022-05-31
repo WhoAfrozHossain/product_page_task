@@ -1,5 +1,5 @@
-import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:flutter/material.dart';
+import 'package:product_page_task/core/utils/utils_export.dart';
 
 class CustomTextWidget extends StatelessWidget {
   final String text;
@@ -31,6 +31,7 @@ class CustomTextWidget extends StatelessWidget {
       child: Text(
         text,
         maxLines: maxLine,
+        // overflow: TextOverflow.ellipsis,
         style: style ??
             getRegularStyle(
               color: ColorManager.lightGrey,

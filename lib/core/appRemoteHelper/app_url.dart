@@ -9,4 +9,5 @@ class AppUrls {
   static const String placeHolderBlurHash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
   String productList = "${_baseUrl}product/search-suggestions/?";
+  String productItem = "${_baseUrl}product-details/";
 }

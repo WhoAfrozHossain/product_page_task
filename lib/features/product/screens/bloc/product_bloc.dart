@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:product_page_task/features/product/data/model/product_model.dart';
 import 'package:product_page_task/features/product/screens/function/product_functions.dart';
+
 import '../../../../main.dart';
 import '../../domain/usecase/products_use_case.dart';
 
@@ -17,6 +18,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         await sl<ProductFunctions>().getProductListData(
             event, emit, productsUseCase,
             isPagination: event.isPagination);
+      }
+
+      if (event is GetProductItemEvent) {
+        await sl<ProductFunctions>()
+            .getProductItemData(event, emit, productsUseCase);
+      }
+
+      if (event is GetProductCartCountEvent) {
+        await sl<ProductFunctions>().getProductCartCountData(event, emit);
       }
     });
   }

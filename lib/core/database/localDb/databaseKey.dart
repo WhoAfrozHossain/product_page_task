@@ -4,6 +4,4 @@ class AppLocalDatabaseKey {
   AppLocalDatabaseKey._();
 
   static String AUTH = "auth";
-
-  static String DASH_BOARD = "dash_board";
 }
