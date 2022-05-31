@@ -1,16 +1,30 @@
-# product_page_task
+# Product Page Task
 
-A new Flutter project.
+It's a task project for Qtec Solution Limited. This application developed using flutter.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Download
 
-A few resources to get you started if this is your first Flutter project:
+- [Product Page Task Android Application](https://github.com/WhoAfrozHossain/product_page_task/raw/master/Resources/Product%20Page%20Task.apk)
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Product list page screenshot](https://github.com/WhoAfrozHossain/product_page_task/blob/master/Resources/Screenshot-1.jpg?raw=true)
+![Product details page screenshot](https://github.com/WhoAfrozHossain/product_page_task/blob/master/Resources/Screenshot-2.jpg?raw=true)
+![Product details page with cart screenshot](https://github.com/WhoAfrozHossain/product_page_task/blob/master/Resources/Screenshot-3.jpg?raw=true)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Resources
+
+- [Design](https://www.figma.com/file/rGoMM3WCglaUzmONEgf3KE/Flutter-Task-File?node-id=0%3A1)
+- [Product search and list api](https://panel.supplyline.network/api/product/search-suggestions/?limit=10&offset=10&search=rice)
+- [Product details api](https://panel.supplyline.network/api/product-details/{slug}/)
+## Used Packages
+
+- get_it
+- bloc
+- cached_network_image
+- dartz
+- equatable
+- connectivity_plus
+- shared_preferences
+- carousel_slider
+- flutter_html
