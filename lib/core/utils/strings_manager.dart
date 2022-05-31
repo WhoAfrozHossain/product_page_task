@@ -14,4 +14,5 @@ class AppStrings {
   static const String totalProfit = "লাভঃ";
   static const String description = "বিস্তারিত";
   static const String wantToBuy = "এটি\nকিনুন";
+  static const String cart = "কার্ট";
 }

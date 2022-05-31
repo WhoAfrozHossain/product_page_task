@@ -12,7 +12,10 @@ class RouteGenerator {
       case Routes.productList:
         return MaterialPageRoute(builder: (_) => ProductListPage());
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => ProductDetailsPage());
+        Map arguments = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+            builder: (_) =>
+                ProductDetailsPage(slug: arguments["product_slug"]));
 
       default:
         return unDefinedRoute();

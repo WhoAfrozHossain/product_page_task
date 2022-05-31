@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart' as html;
 import 'package:product_page_task/core/apphelper/app_helper_functions.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/core/widgets/custom_space_widget.dart';
 import 'package:product_page_task/core/widgets/custom_text_widget.dart';
+import 'package:product_page_task/features/product/screens/widgets/product_details_cart_widget.dart';
+
+import '../../data/model/product_model.dart';
 
 class ProductDetailsInformationWidget extends StatelessWidget {
   const ProductDetailsInformationWidget({
     Key? key,
+    required this.item,
   }) : super(key: key);
+
+  final ProductModel? item;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CustomTextWidget(
-          text: "Lays Classic Family Chips",
+          text: item?.productName ?? "",
           isFullWidth: true,
           style: getBoldStyle(
             color: ColorManager.black,
@@ -32,7 +39,7 @@ class ProductDetailsInformationWidget extends StatelessWidget {
               ),
             ),
             CustomTextWidget(
-              text: "ADFD",
+              text: item?.brand?.name ?? "",
               style: getBoldStyle(
                 color: ColorManager.black,
                 fontSize: FontSize.s14,
@@ -58,7 +65,7 @@ class ProductDetailsInformationWidget extends StatelessWidget {
             ),
             Expanded(
               child: CustomTextWidget(
-                text: "ADFdadfD",
+                text: item?.seller ?? "",
                 maxLine: 1,
                 isFullWidth: true,
                 style: getBoldStyle(
@@ -70,88 +77,91 @@ class ProductDetailsInformationWidget extends StatelessWidget {
           ],
         ),
         CustomSpaceWidget.fromHeight(AppSize.s8),
-        Container(
-          decoration: BoxDecoration(
-            color: ColorManager.white,
-            borderRadius: BorderRadius.circular(AppSize.s16),
-          ),
-          padding: EdgeInsets.all(AppSize.s15),
-          child: Column(
-            children: [
-              TitleWithValueRow(
-                title: AppStrings.buyPrice,
-                value: 220,
-                color: ColorManager.secondaryColor,
-                fontSize: FontSize.s18,
-              ),
-              TitleWithValueRow(
-                title: AppStrings.sellPrice,
-                value: 250,
-                color: ColorManager.black,
-                fontSize: FontSize.s16,
-              ),
-              CustomTextWidget(
-                text:
-                    "-----------------------------------------------------------------------------------------",
-                maxLine: 1,
-                isFullWidth: true,
-                style: getBoldStyle(
-                  color: ColorManager.lightGrey.withOpacity(.3),
-                  fontSize: FontSize.s14,
+        Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: ColorManager.white,
+                    borderRadius: BorderRadius.circular(AppSize.s16),
+                  ),
+                  padding: EdgeInsets.all(AppPadding.p16),
+                  child: Column(
+                    children: [
+                      TitleWithValueRow(
+                        title: AppStrings.buyPrice,
+                        value: item?.charge?.currentCharge,
+                        color: ColorManager.secondaryColor,
+                        fontSize: FontSize.s18,
+                      ),
+                      TitleWithValueRow(
+                        title: AppStrings.sellPrice,
+                        value: item?.charge?.sellingPrice,
+                        color: ColorManager.black,
+                        fontSize: FontSize.s16,
+                      ),
+                      CustomTextWidget(
+                        text:
+                            "-----------------------------------------------------------------------------------------",
+                        maxLine: 1,
+                        isFullWidth: true,
+                        style: getBoldStyle(
+                          color: ColorManager.lightGrey.withOpacity(.3),
+                          fontSize: FontSize.s14,
+                        ),
+                        align: TextAlign.center,
+                      ),
+                      TitleWithValueRow(
+                        title: AppStrings.totalProfit,
+                        value: item?.charge?.profit,
+                        color: ColorManager.black,
+                        fontSize: FontSize.s14,
+                      ),
+                    ],
+                  ),
                 ),
-                align: TextAlign.center,
-              ),
-              TitleWithValueRow(
-                title: AppStrings.totalProfit,
-                value: 30,
-                color: ColorManager.black,
-                fontSize: FontSize.s14,
-              ),
-            ],
-          ),
-        ),
-        CustomSpaceWidget.fromHeight(AppSize.s28),
-        ClipPath(
-          clipper: HexagonClipper(),
-          child: Container(
-            height: 75,
-            width: 70,
-            decoration: BoxDecoration(
-              gradient: ColorManager().gradientButtonColor(),
+                CustomSpaceWidget.fromHeight(AppSize.s28),
+              ],
             ),
-            child: Center(
-              child: CustomTextWidget(
-                text: AppStrings.wantToBuy,
-                maxLine: 2,
-                isFullWidth: true,
-                style: getRegularStyle(
-                  color: ColorManager.white,
-                  fontSize: FontSize.s14,
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: ProductDetailsCartWidget(
+                  slug: item?.slug ?? "",
+                  stock: item?.stock,
                 ),
-                align: TextAlign.center,
               ),
             ),
-          ),
+          ],
         ),
-        CustomSpaceWidget.fromHeight(AppSize.s28),
         CustomTextWidget(
           text: AppStrings.description,
           isFullWidth: true,
-          style: getMediumStyle(
+          style: getBoldStyle(
             color: ColorManager.black,
-            fontSize: FontSize.s16,
+            fontSize: FontSize.s18,
           ),
         ),
         CustomSpaceWidget.fromHeight(AppSize.s8),
-        CustomTextWidget(
-          text:
-              "Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips Lays Classic Family Chips",
-          isFullWidth: true,
-          style: getRegularStyle(
-            color: ColorManager.lightGrey,
-            fontSize: FontSize.s14,
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: html.Html(
+            shrinkWrap: true,
+            data: item?.description ?? "",
           ),
         ),
+
+        // CustomTextWidget(
+        //   text: item?.description ?? "",
+        //   isFullWidth: true,
+        //   style: getRegularStyle(
+        //     color: ColorManager.lightGrey,
+        //     fontSize: FontSize.s14,
+        //   ),
+        // ),
         CustomSpaceWidget.fromHeight(AppSize.s8),
       ],
     );
@@ -253,10 +263,11 @@ class TitleWithValueRow extends StatelessWidget {
           text: title ?? "",
           style: getBoldStyle(color: color, fontSize: fontSize),
         ),
-        CustomTextWidget(
-          text: AmountGenerator.doubleToAmount(value ?? 0),
-          style: getBoldStyle(color: color, fontSize: fontSize),
-        ),
+        if (value != null)
+          CustomTextWidget(
+            text: AmountGenerator.doubleToAmount(value ?? 0),
+            style: getBoldStyle(color: color, fontSize: fontSize),
+          ),
       ],
     );
   }

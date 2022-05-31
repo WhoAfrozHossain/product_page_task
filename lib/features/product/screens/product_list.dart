@@ -13,10 +13,11 @@ class ProductListPage extends StatelessWidget {
 
   bool _isPagination = false;
 
-  ProductsListSuccessState? _state;
+  // ProductsListSuccessState? _state;
 
   @override
   Widget build(BuildContext context) {
+    sl<ProductFunctions>().init(context);
     sl<ProductFunctions>().productListControllerListen(context);
 
     return Scaffold(
@@ -26,7 +27,7 @@ class ProductListPage extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.all(AppPadding.p14),
-              child: ProductSearchWidget(),
+              child: ProductSearchWidget(isBack: false),
             ),
             Expanded(
               child: BlocListener<ProductBloc, ProductState>(
@@ -43,7 +44,7 @@ class ProductListPage extends StatelessWidget {
                         child: Text("Something went wrong."),
                       );
                     } else if (state is ProductsListSuccessState) {
-                      _state = state;
+                      // _state = state;
                       return _productList(false);
                     } else if (state is ProductCartCountState) {
                       return _productList(false);

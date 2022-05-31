@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:product_page_task/features/product/data/model/product_cart_model.dart';
 import 'package:product_page_task/features/product/data/model/product_model.dart';
 import 'package:product_page_task/features/product/screens/function/product_functions.dart';
 

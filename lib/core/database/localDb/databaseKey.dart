@@ -4,4 +4,5 @@ class AppLocalDatabaseKey {
   AppLocalDatabaseKey._();
 
   static String AUTH = "auth";
+  static String CART = "cart";
 }

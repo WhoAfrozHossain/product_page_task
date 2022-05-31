@@ -32,10 +32,8 @@ class GetProductItemEvent extends ProductEvent {
 }
 
 class GetProductCartCountEvent extends ProductEvent {
-  final String slug;
-
-  GetProductCartCountEvent({required this.slug});
+  GetProductCartCountEvent();
 
   @override
-  List<Object?> get props => [slug];
+  List<Object?> get props => [];
 }

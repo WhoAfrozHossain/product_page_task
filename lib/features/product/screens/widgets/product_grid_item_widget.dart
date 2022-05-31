@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_page_task/core/apphelper/app_helper_functions.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/core/widgets/custom_image_widget.dart';
@@ -6,6 +7,7 @@ import 'package:product_page_task/core/widgets/custom_space_widget.dart';
 import 'package:product_page_task/core/widgets/custom_text_widget.dart';
 import 'package:product_page_task/features/product/data/model/product_model.dart';
 
+import '../bloc/product_bloc.dart';
 import 'cart_counter_widget.dart';
 
 class ProductGridItemWidget extends StatelessWidget {
@@ -33,9 +35,13 @@ class ProductGridItemWidget extends StatelessWidget {
                 arguments: {
                   "product_slug": item.slug ?? "",
                 },
-              );
+              ).then((value) {
+                BlocProvider.of<ProductBloc>(context)
+                    .add(GetProductCartCountEvent());
+              });
             },
             child: Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: ColorManager.white,
                 borderRadius: BorderRadius.circular(AppSize.s16),
@@ -47,29 +53,35 @@ class ProductGridItemWidget extends StatelessWidget {
                 AppSize.s15,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppPadding.p16),
-                      child: CustomImageWidget(
-                        context: context,
-                        imageUrl: item.image,
-                        fit: BoxFit.fill,
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppPadding.p16),
+                          child: CustomImageWidget(
+                            context: context,
+                            imageUrl: item.image,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   CustomTextWidget(
                     text: item.productName ?? "",
-                    maxLine: 1,
+                    maxLine: 2,
                     isFullWidth: true,
                     style: getRegularStyle(
                       color: ColorManager.black,
-                      fontSize: FontSize.s16,
+                      fontSize: FontSize.s15,
                     ),
                   ),
                   CustomSpaceWidget.fromHeight(5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    spacing: 10.0,
                     children: [
                       TitleWithValueRow(
                         title: AppStrings.buy,
@@ -85,8 +97,8 @@ class ProductGridItemWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    spacing: 10.0,
                     children: [
                       TitleWithValueRow(
                         title: AppStrings.sell,
@@ -162,6 +174,7 @@ class TitleWithValueRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (title != null)
           CustomTextWidget(

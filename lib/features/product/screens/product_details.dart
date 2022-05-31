@@ -14,14 +14,15 @@ import '../domain/usecase/products_use_case.dart';
 import 'bloc/product_bloc.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  ProductDetailsPage({Key? key}) : super(key: key);
+  ProductDetailsPage({Key? key, required this.slug}) : super(key: key);
 
-  String? slug;
+  final String? slug;
+
+  ProductModel? item;
 
   @override
   Widget build(BuildContext context) {
-    dynamic _arg = ModalRoute.of(context)!.settings.arguments;
-    slug = _arg["product_slug"];
+    print(slug);
 
     return Scaffold(
       appBar: CustomAppbarWidget(
@@ -38,7 +39,9 @@ class ProductDetailsPage extends StatelessWidget {
                 AppPadding.p14,
                 AppPadding.p14,
               ),
-              child: ProductSearchWidget(),
+              child: ProductSearchWidget(
+                isBack: true,
+              ),
             ),
             Expanded(
               child: BlocProvider(
@@ -55,14 +58,19 @@ class ProductDetailsPage extends StatelessWidget {
                   child: BlocBuilder<ProductBloc, ProductState>(
                     builder: (_, state) {
                       if (state is ProductItemSuccessState) {
+                        item = state.item;
                         return productDetails(context, state.item);
                       } else {
-                        return Center(
-                          child: Container(
-                            padding: EdgeInsets.all(AppPadding.p20),
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
+                        if (item != null) {
+                          return productDetails(context, item);
+                        } else {
+                          return Center(
+                            child: Container(
+                              padding: EdgeInsets.all(AppPadding.p20),
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
                       }
                     },
                   ),
@@ -82,12 +90,10 @@ class ProductDetailsPage extends StatelessWidget {
       child: Column(
         children: [
           ProductSliderWidget(
-            slider: [
-              "https://www.ubuy.com.bd/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFuTTNHSnBqN0wuX1NMMTUwMF8uanBn.jpg"
-            ],
+            slider: item?.images ?? [],
           ),
           CustomSpaceWidget.fromHeight(AppSize.s20),
-          ProductDetailsInformationWidget(),
+          ProductDetailsInformationWidget(item: item),
         ],
       ),
     );

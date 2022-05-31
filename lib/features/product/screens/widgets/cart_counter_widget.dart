@@ -15,39 +15,34 @@ class CartCounterWidget extends StatelessWidget {
   final String slug;
   final int stock;
 
-  int? countCart;
-
   @override
   Widget build(BuildContext context) {
-    sl<ProductFunctions>()
-        .getProductCart(slug)
-        .then((value) => countCart = value);
-
     return BlocListener<ProductBloc, ProductState>(
       listener: (context, state) {},
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (_, state) {
-          if (state is ProductCartCountState) {
-            if (state.slug == slug) {
-              countCart = state.count;
-            }
-            return _view(context, countCart);
-          } else {
-            return _view(context, countCart);
-          }
+          // if (state is ProductCartCountState) {
+          //   if (state.slug == slug) {
+          //     countCart = state.count;
+          //   }
+          //   return _view(context, countCart);
+          // } else {
+          //   return _view(context, countCart);
+          // }
+
+          return _view(context, sl<ProductFunctions>().getCurrentProduct(slug));
         },
       ),
     );
   }
 
   _view(BuildContext context, int? count) {
-    print("$slug :: $count");
-
     return count == null || count < 1
         ? CustomIconButton(
             icon: Icon(
               Icons.add_rounded,
               color: ColorManager.white,
+              size: 24,
             ),
             onTap: () {
               sl<ProductFunctions>().addProductCart(context, slug, stock);
@@ -62,7 +57,7 @@ class CartCounterWidget extends StatelessWidget {
               color: ColorManager.secondaryLightColor,
               borderRadius: BorderRadius.circular(AppSize.s36),
             ),
-            margin: EdgeInsets.symmetric(horizontal: AppMargin.m14),
+            margin: EdgeInsets.symmetric(horizontal: AppMargin.m18),
             padding: EdgeInsets.all(AppPadding.p5),
             child: Row(
               children: [
@@ -70,14 +65,15 @@ class CartCounterWidget extends StatelessWidget {
                   icon: Icon(
                     Icons.remove_rounded,
                     color: ColorManager.white,
+                    size: 18,
                   ),
                   onTap: () {
                     sl<ProductFunctions>().removeProductCart(context, slug);
                   },
-                  backgroundColor: ColorManager.secondaryColor.withOpacity(.2),
+                  backgroundColor: ColorManager.secondaryColor.withOpacity(.1),
                   borderRadius: AppSize.s36,
-                  height: 25,
-                  width: 25,
+                  height: 22,
+                  width: 22,
                 ),
                 Expanded(
                   child: Center(
@@ -85,9 +81,9 @@ class CartCounterWidget extends StatelessWidget {
                       // padding: EdgeInsets.all(AppSize.s5),
                       child: CustomTextWidget(
                         text: "$count ${AppStrings.pis}",
-                        style: getBoldStyle(
+                        style: getMediumStyle(
                           color: ColorManager.secondaryColor,
-                          fontSize: FontSize.s14,
+                          fontSize: FontSize.s12,
                         ),
                       ),
                     ),
@@ -97,14 +93,15 @@ class CartCounterWidget extends StatelessWidget {
                   icon: Icon(
                     Icons.add_rounded,
                     color: ColorManager.white,
+                    size: 18,
                   ),
                   onTap: () {
                     sl<ProductFunctions>().addProductCart(context, slug, stock);
                   },
                   gradientColor: ColorManager().gradientButtonColor(),
                   borderRadius: AppSize.s36,
-                  height: 25,
-                  width: 25,
+                  height: 22,
+                  width: 22,
                 ),
               ],
             ),

@@ -7,7 +7,9 @@ import '../../../../main.dart';
 import '../function/product_functions.dart';
 
 class ProductSearchWidget extends StatelessWidget {
-  const ProductSearchWidget({Key? key}) : super(key: key);
+  const ProductSearchWidget({Key? key, required this.isBack}) : super(key: key);
+
+  final bool isBack;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,9 @@ class ProductSearchWidget extends StatelessWidget {
         icon: Icon(CupertinoIcons.search),
         onTap: () {
           print("Search Call");
+          if (isBack) {
+            Navigator.pop(context);
+          }
           sl<ProductFunctions>().searchProduct(context);
         },
       ),

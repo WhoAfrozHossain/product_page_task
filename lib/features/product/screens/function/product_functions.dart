@@ -14,6 +14,8 @@ import 'package:product_page_task/features/product/data/model/product_model.dart
 import 'package:product_page_task/features/product/domain/usecase/products_use_case.dart';
 import 'package:product_page_task/features/product/screens/bloc/product_bloc.dart';
 
+import '../../data/model/product_cart_model.dart';
+
 class ProductFunctions {
   BuildContext? context;
 
@@ -24,16 +26,20 @@ class ProductFunctions {
   String searchTextValue = "";
 
   List<ProductModel> productList = [];
+  List<int> productCart = [];
   ProductListModel? productListModel;
 
   ProductItemModel? productItemModel;
+
+  ProductCartModel cartModel = ProductCartModel();
 
   bool isLoadingData = false;
 
   init(BuildContext context) {
     this.context = context;
 
-    BlocProvider.of<ProductBloc>(context).add(GetProductListEvent());
+    // BlocProvider.of<ProductBloc>(context).add(GetProductListEvent());
+    BlocProvider.of<ProductBloc>(context).add(GetProductCartCountEvent());
   }
 
   searchProduct(BuildContext context) {
@@ -97,7 +103,7 @@ class ProductFunctions {
 
   productListControllerListen(BuildContext context) {
     productListScrollController.addListener(() {
-      if (productListScrollController.position.maxScrollExtent ==
+      if (productListScrollController.position.maxScrollExtent <
           productListScrollController.offset) {
         if (productListModel?.data?.products?.next != null &&
             isLoadingData == false) {
@@ -115,32 +121,59 @@ class ProductFunctions {
 
   Future getProductCartCountData(
       GetProductCartCountEvent event, Emitter<ProductState> emit) async {
-    int? value = await getProductCart(event.slug) ?? 0;
+    Map? value = await LocalDbFunctionImpl().getCart();
 
-    emit(ProductCartCountState(count: value, slug: event.slug));
-  }
+    if (value != null) {
+      cartModel = ProductCartModel.fromJson(value);
+    }
 
-  Future<int?> getProductCart(String slug) async {
-    int? value = await LocalDbFunctionImpl().getCart(slug);
-    return value;
+    emit(ProductCartCountState(cartModel: cartModel));
   }
 
   setProductCart(String slug, int value) async {
-    await LocalDbFunctionImpl().setCart(slug, value);
+    bool canCartUpdate = false;
 
-    BlocProvider.of<ProductBloc>(context!).add(
-      GetProductCartCountEvent(
-        slug: slug,
-      ),
-    );
+    if (cartModel.carts != null && cartModel.carts!.isNotEmpty) {
+      for (int i = 0; i < cartModel.carts!.length; i++) {
+        if (cartModel.carts![i].slug == slug) {
+          cartModel.carts![i].cartCount = value;
+
+          canCartUpdate = true;
+        }
+      }
+      if (!canCartUpdate) {
+        cartModel.carts!.add(ProductCartItem(slug: slug, cartCount: value));
+      }
+    } else {
+      cartModel.carts = [];
+      cartModel.carts!.add(ProductCartItem(slug: slug, cartCount: value));
+    }
+
+    await LocalDbFunctionImpl().setCart(jsonEncode(cartModel.toJson()));
+
+    BlocProvider.of<ProductBloc>(context!).add(GetProductCartCountEvent());
+  }
+
+  int getCurrentProduct(String slug) {
+    int currentValue = 0;
+
+    if (cartModel.carts != null && cartModel.carts!.isNotEmpty) {
+      for (int i = 0; i < cartModel.carts!.length; i++) {
+        if (cartModel.carts![i].slug == slug) {
+          currentValue = cartModel.carts?[i].cartCount ?? 0;
+        }
+      }
+    }
+
+    return currentValue;
   }
 
   addProductCart(BuildContext context, String slug, int stock) async {
     this.context = context;
 
-    int value = await getProductCart(slug) ?? 0;
+    int value = getCurrentProduct(slug);
 
-    if (value <= stock) {
+    if (value < stock) {
       setProductCart(slug, value + 1);
     } else {
       AppSnackBar.showErrorMessage(message: "Sorry, Stock is over");
@@ -150,7 +183,7 @@ class ProductFunctions {
   removeProductCart(BuildContext context, String slug) async {
     this.context = context;
 
-    int value = await getProductCart(slug) ?? 0;
+    int value = getCurrentProduct(slug);
 
     if (value > 0) {
       setProductCart(slug, value - 1);

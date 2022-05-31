@@ -2,9 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:product_page_task/core/utils/utils_export.dart';
 import 'package:product_page_task/core/widgets/custom_image_widget.dart';
+import 'package:product_page_task/features/product/data/model/image_model.dart';
 
 class ProductSliderWidget extends StatelessWidget {
-  final List<String> slider;
+  final List<ImageModel> slider;
 
   const ProductSliderWidget({
     Key? key,
@@ -22,7 +23,7 @@ class ProductSliderWidget extends StatelessWidget {
         autoPlay: true,
       ),
       items: slider.map(
-        (String image) {
+        (ImageModel image) {
           return Container(
             decoration: BoxDecoration(
               color: ColorManager.white,
@@ -31,7 +32,8 @@ class ProductSliderWidget extends StatelessWidget {
             padding: EdgeInsets.all(AppSize.s36),
             child: CustomImageWidget(
               context: context,
-              imageUrl: image,
+              imageUrl: image.image,
+              fit: BoxFit.fill,
             ),
           );
         },

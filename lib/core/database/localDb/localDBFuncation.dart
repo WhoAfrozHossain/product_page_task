@@ -1,17 +1,20 @@
+import 'dart:convert';
+
+import 'package:product_page_task/core/database/localDb/databaseKey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocalDBFunctions {
-  Future<bool> setCart(String key, int count);
-  Future<int?> getCart(String key);
+  Future<bool> setCart(String cart);
+  Future<Map?> getCart();
 }
 
 class LocalDbFunctionImpl extends LocalDBFunctions {
   @override
-  Future<bool> setCart(String key, int value) async {
+  Future<bool> setCart(String cart) async {
     try {
       SharedPreferences sp = await SharedPreferences.getInstance();
 
-      sp.setInt(key, value);
+      sp.setString(AppLocalDatabaseKey.CART, cart);
 
       return true;
     } catch (e) {
@@ -21,14 +24,14 @@ class LocalDbFunctionImpl extends LocalDBFunctions {
   }
 
   @override
-  Future<int?> getCart(String key) async {
-    int? keyValue;
+  Future<Map?> getCart() async {
+    Map? keyValue;
 
     SharedPreferences sp = await SharedPreferences.getInstance();
-    Object? _encodedAuthData = sp.get(key);
+    String? _encodedData = sp.getString(AppLocalDatabaseKey.CART);
 
-    if (_encodedAuthData != null) {
-      keyValue = int.parse(_encodedAuthData.toString());
+    if (_encodedData != null) {
+      keyValue = jsonDecode(_encodedData);
     }
 
     return keyValue ?? null;

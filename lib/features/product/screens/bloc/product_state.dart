@@ -51,11 +51,10 @@ class ProductsListLastIndexState extends ProductState {
 }
 
 class ProductCartCountState extends ProductState {
-  final int? count;
-  final String? slug;
+  final ProductCartModel? cartModel;
 
-  ProductCartCountState({required this.count, required this.slug});
+  ProductCartCountState({required this.cartModel});
 
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [cartModel];
 }
