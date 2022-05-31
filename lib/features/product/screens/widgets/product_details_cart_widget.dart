@@ -37,47 +37,77 @@ class ProductDetailsCartWidget extends StatelessWidget {
             ),
           ),
         CustomSpaceWidget.fromHeight(AppSize.s8),
-        ClipPath(
-          clipper: HexagonClipper(),
-          child: InkWell(
-            onTap: () {
-              if (productCount < 1) {
-                sl<ProductFunctions>()
-                    .addProductCart(context, slug, stock ?? 0);
-              }
-            },
-            child: Container(
-              height: 75,
-              width: 70,
-              decoration: BoxDecoration(
-                gradient: ColorManager().gradientButtonColor(),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (productCount > 0)
-                      Icon(
-                        Icons.local_mall_outlined,
-                        color: ColorManager.white,
-                      ),
-                    CustomTextWidget(
-                      text: productCount > 0
-                          ? AppStrings.cart
-                          : AppStrings.wantToBuy,
-                      maxLine: 2,
-                      isFullWidth: true,
-                      style: getRegularStyle(
-                        color: ColorManager.white,
-                        fontSize: FontSize.s14,
-                      ),
-                      align: TextAlign.center,
+        Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              child: ClipPath(
+                clipper: HexagonClipper(),
+                child: InkWell(
+                  onTap: () {
+                    if (productCount < 1) {
+                      sl<ProductFunctions>()
+                          .addProductCart(context, slug, stock ?? 0);
+                    }
+                  },
+                  child: Container(
+                    height: 75,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      gradient: ColorManager().gradientButtonColor(),
                     ),
-                  ],
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (productCount > 0)
+                            Icon(
+                              Icons.local_mall_outlined,
+                              color: ColorManager.white,
+                            ),
+                          CustomTextWidget(
+                            text: productCount > 0
+                                ? AppStrings.cart
+                                : AppStrings.wantToBuy,
+                            maxLine: 2,
+                            isFullWidth: true,
+                            style: getRegularStyle(
+                              color: ColorManager.white,
+                              fontSize: FontSize.s14,
+                            ),
+                            align: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+            if (productCount > 0)
+              Positioned(
+                top: 10,
+                right: 0,
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    color: ColorManager.secondaryLightColor,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: ColorManager.white, width: 2),
+                  ),
+                  child: Center(
+                    child: CustomTextWidget(
+                      text: "$productCount",
+                      style: getMediumStyle(
+                        color: ColorManager.secondaryColor,
+                        fontSize: FontSize.s14,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+          ],
         ),
       ],
     );
